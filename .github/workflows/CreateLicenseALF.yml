@@ -16,7 +16,10 @@ jobs:
       with:
         unity-version: ${{ matrix.unity-version }}
     - name: Create Manual Activation File
-      run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -logfile -createManualActivationFile || exit 0
+      run: /opt/Unity/Editor/Unity -batchmode -nographics -manualActivation -logFile /dev/stdout -username ${USERNAME} -password ${PASSWORD} || exit 0
+      env:
+        USERNAME: ${{ secrets.username }} 
+        PASSWORD: ${{ secrets.password }} 
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1.0.0
